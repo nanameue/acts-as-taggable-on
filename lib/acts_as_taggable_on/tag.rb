@@ -39,13 +39,13 @@ module ActsAsTaggableOn
     end
 
     def self.named_like(name)
-      clause = ["name #{ActsAsTaggableOn::Utils.like_operator} ? ESCAPE '!'", "%#{ActsAsTaggableOn::Utils.escape_like(name)}%"]
+      clause = ["name #{ActsAsTaggableOn::Utils.like_operator} ? ESCAPE '!'", "#{ActsAsTaggableOn::Utils.escape_like(name)}%"]
       where(clause)
     end
 
     def self.named_like_any(list)
       clause = list.map { |tag|
-        sanitize_sql(["name #{ActsAsTaggableOn::Utils.like_operator} ? ESCAPE '!'", "%#{ActsAsTaggableOn::Utils.escape_like(tag.to_s)}%"])
+        sanitize_sql(["name #{ActsAsTaggableOn::Utils.like_operator} ? ESCAPE '!'", "#{ActsAsTaggableOn::Utils.escape_like(tag.to_s)}%"])
       }.join(' OR ')
       where(clause)
     end
